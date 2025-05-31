@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Album App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="{{ theme }}">
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <div class="theme-switcher">
+            <span>Change Theme:</span>
+            {% for t in themes %}
+                <a href="{{ url_for('set_theme_route', theme_name=t) }}" class="{{ 'active' if t == theme else '' }}">{{ t|capitalize }}</a>
+            {% endfor %}
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer>
+        <p>Photo Album App &copy; {{ "now"|date("Y") }}</p>
+    </footer>
+</body>
+</html>

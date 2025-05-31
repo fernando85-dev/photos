@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="{{ url_for('index') }}">&laquo; Back to Albums List</a>
+    <h1>Album: {{ album.name }}</h1>
+    <p><em>Created on: {{ album.creation_date[:16] }}</em></p>
+
+    <section id="upload-photo">
+        <h2>Upload New Photo to This Album</h2>
+        <form action="{{ url_for('upload_photo_route', album_id=album.id) }}" method="post" enctype="multipart/form-data">
+            <div>
+                <label for="photo">Choose Photo:</label>
+                <input type="file" id="photo" name="photo" accept="image/*" required>
+            </div>
+            <div>
+                <label for="notes">Notes (optional):</label>
+                <textarea id="notes" name="notes" rows="3"></textarea>
+            </div>
+            <button type="submit">Upload Photo</button>
+        </form>
+    </section>
+
+    <section id="photo-gallery">
+        <h2>Photos in This Album</h2>
+        {% if photos %}
+            <div class="gallery">
+                {% for photo in photos %}
+                    <div class="photo-item">
+                        <img src="{{ url_for('uploaded_file', filename=photo.filename) }}" alt="Photo ID {{ photo.id }} - {{ photo.notes|default('No notes', true) }}" title="{{ photo.notes|default('No notes', true) }}">
+                        <p class="photo-notes">{{ photo.notes|default('<em>No notes provided.</em>', true)|safe }}</p>
+                        <p class="photo-meta">Uploaded: {{ photo.upload_date[:16] }} <br> (Filename: {{ photo.filename }})</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No photos in this album yet. Upload one above!</p>
+        {% endif %}
+    </section>
+{% endblock %}

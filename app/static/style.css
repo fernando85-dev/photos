@@ -1,0 +1,286 @@
+/* General Styles */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
+}
+
+nav {
+    background: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+nav a:hover, nav a.active {
+    background: #555;
+}
+
+.theme-switcher {
+    display: inline-block;
+    margin-left: 20px;
+    border-left: 1px solid #555;
+    padding-left: 10px;
+}
+.theme-switcher span {
+    margin-right: 5px;
+}
+
+
+h1, h2 {
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 5px 0;
+    border-bottom: 1px #eee solid;
+}
+ul li a {
+    text-decoration: none;
+}
+
+form div {
+    margin-bottom: 10px;
+}
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+form input[type="text"],
+form textarea,
+form input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    box-sizing: border-box; /* Important for width 100% */
+}
+form button {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Flash Messages */
+.flashes {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 15px;
+}
+.flashes li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+}
+.flashes .success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+.flashes .error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.flashes .warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+.flashes .info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+
+/* Photo Gallery */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+.photo-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+.photo-item img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 5px;
+}
+.photo-item .photo-notes {
+    font-size: 0.9em;
+    color: #555;
+}
+.photo-item .photo-meta {
+    font-size: 0.8em;
+    color: #777;
+}
+
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 15px;
+    background: #f4f4f4;
+    font-size: 0.9em;
+}
+
+/* --- Theme Styles --- */
+
+/* Default/White Theme */
+body.white {
+    background-color: #fff;
+    color: #333;
+}
+body.white nav {
+    background-color: #007bff; /* Blue for white theme nav */
+    color: #fff;
+}
+body.white nav a {
+    color: #fff;
+}
+body.white nav a:hover, body.white nav a.active {
+    background: #0056b3;
+}
+body.white .theme-switcher {
+    border-left: 1px solid #0056b3;
+}
+body.white button {
+    background-color: #007bff;
+    color: white;
+}
+body.white button:hover {
+    background-color: #0056b3;
+}
+body.white footer {
+    background: #f8f9fa;
+    color: #333;
+    border-top: 1px solid #eee;
+}
+body.white .photo-item {
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+
+/* Black Theme */
+body.black {
+    background-color: #333;
+    color: #f1f1f1;
+}
+body.black nav {
+    background-color: #1a1a1a;
+    color: #f1f1f1;
+}
+body.black nav a {
+    color: #f1f1f1;
+}
+body.black nav a:hover, body.black nav a.active {
+    background: #000;
+}
+body.black .theme-switcher {
+    border-left: 1px solid #000;
+}
+body.black h1, body.black h2 {
+    color: #eee;
+}
+body.black ul li {
+    border-bottom: 1px #555 solid;
+}
+body.black ul li a {
+    color: #6cb2eb; /* Light blue links for dark theme */
+}
+body.black form input[type="text"],
+body.black form textarea {
+    background-color: #444;
+    color: #f1f1f1;
+    border-color: #555;
+}
+body.black button {
+    background-color: #555;
+    color: #f1f1f1;
+    border: 1px solid #666;
+}
+body.black button:hover {
+    background-color: #666;
+}
+body.black footer {
+    background: #222;
+    color: #ccc;
+    border-top: 1px solid #444;
+}
+body.black .photo-item {
+    border: 1px solid #555;
+    background-color: #3d3d3d;
+}
+body.black .photo-item .photo-notes {
+    color: #ccc;
+}
+body.black .photo-item .photo-meta {
+    color: #aaa;
+}
+
+
+/* Blue Theme */
+body.blue {
+    background-color: #e0f7fa; /* Light cyan background */
+    color: #004d40; /* Dark teal text */
+}
+body.blue nav {
+    background-color: #00796b; /* Teal nav */
+    color: #fff;
+}
+body.blue nav a { color: #fff; }
+body.blue nav a:hover, body.blue nav a.active { background: #004d40; }
+body.blue .theme-switcher { border-left: 1px solid #004d40; }
+body.blue button { background-color: #00796b; color: white; }
+body.blue button:hover { background-color: #004d40; }
+body.blue footer { background: #b2dfdb; color: #004d40; border-top: 1px solid #80cbc4; }
+body.blue .photo-item { border: 1px solid #80cbc4; background-color: #c8e6c9; } /* Light green items */
+body.blue form input[type="text"],
+body.blue form textarea { background-color: #fff; color: #004d40; border-color: #80cbc4; }
+
+
+/* Green Theme */
+body.green {
+    background-color: #e8f5e9; /* Light green background */
+    color: #1b5e20; /* Dark green text */
+}
+body.green nav {
+    background-color: #2e7d32; /* Green nav */
+    color: #fff;
+}
+body.green nav a { color: #fff; }
+body.green nav a:hover, body.green nav a.active { background: #1b5e20; }
+body.green .theme-switcher { border-left: 1px solid #1b5e20; }
+body.green button { background-color: #2e7d32; color: white; }
+body.green button:hover { background-color: #1b5e20; }
+body.green footer { background: #c8e6c9; color: #1b5e20; border-top: 1px solid #a5d6a7; }
+body.green .photo-item { border: 1px solid #a5d6a7; background-color: #dcedc8; } /* Lighter green items */
+body.green form input[type="text"],
+body.green form textarea { background-color: #fff; color: #1b5e20; border-color: #a5d6a7; }

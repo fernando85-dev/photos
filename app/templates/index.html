@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>My Photo Albums</h1>
+
+    <section id="create-album">
+        <h2>Create New Album</h2>
+        <form action="{{ url_for('create_album_route') }}" method="post">
+            <label for="album_name">Album Name:</label>
+            <input type="text" id="album_name" name="album_name" required>
+            <button type="submit">Create Album</button>
+        </form>
+    </section>
+
+    <section id="album-list">
+        <h2>Existing Albums</h2>
+        {% if albums %}
+            <ul>
+                {% for album in albums %}
+                    <li>
+                        <a href="{{ url_for('album_view', album_id=album.id) }}">{{ album.name }}</a>
+                        <span class="album-meta"> (ID: {{ album.id }}, Created: {{ album.creation_date[:10] }})</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No albums found. Create one above!</p>
+        {% endif %}
+    </section>
+{% endblock %}
