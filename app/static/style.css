@@ -284,3 +284,49 @@ body.green footer { background: #c8e6c9; color: #1b5e20; border-top: 1px solid #
 body.green .photo-item { border: 1px solid #a5d6a7; background-color: #dcedc8; } /* Lighter green items */
 body.green form input[type="text"],
 body.green form textarea { background-color: #fff; color: #1b5e20; border-color: #a5d6a7; }
+
+/* Exam Styles */
+#exam-container {
+    margin-top: 20px;
+}
+
+.question {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.question p {
+    font-weight: bold;
+}
+
+.answers {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.answers li {
+    padding: 10px;
+    border: 1px solid #eee;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.answers li:hover {
+    background-color: #f0f0f0;
+}
+
+.answers li.correct {
+    background-color: #d4edda; /* Green */
+}
+
+.answers li.incorrect {
+    background-color: #f8d7da; /* Red */
+}
+
+.answers li.correct-unselected {
+    background-color: #fff3cd; /* Yellow */
+}

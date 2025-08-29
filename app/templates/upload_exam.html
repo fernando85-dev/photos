@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Upload Mock Exam</h1>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="exam_file" accept=".docx">
+        <button type="submit">Upload</button>
+    </form>
+{% endblock %}

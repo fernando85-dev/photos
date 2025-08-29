@@ -11,6 +11,7 @@ from email import encoders
 
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory, flash
 from werkzeug.utils import secure_filename
+import docx
 
 # --- Constants ---
 BASE_APP_DIR = os.path.dirname(os.path.abspath(__file__)) # Points to 'app' directory
@@ -24,7 +25,7 @@ TEMP_ZIP_DIR = os.path.join(BASE_APP_DIR, 'tmp_zip_files')
 app = Flask(__name__)
 app.secret_key = "supersecretkey" # Needed for flash messages
 app.config['UPLOAD_FOLDER'] = UPLOADS_DIR
-app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif', 'docx'}
 
 # --- Global Settings ---
 CURRENT_THEME = 'white'  # Default theme for the application
@@ -402,6 +403,61 @@ def send_email_with_attachment(recipient_email: str, subject: str, body: str, at
     # ...
     print(f"Simulating email to {recipient_email} with attachment {attachment_path}") # Simulation
     return True
+
+
+def parse_exam_docx(docx_path):
+    """
+    Parses a .docx file to extract exam questions and answers.
+    """
+    try:
+        document = docx.Document(docx_path)
+        questions = []
+        current_question = None
+
+        for para in document.paragraphs:
+            text = para.text.strip()
+            if not text:
+                continue
+
+            # Assuming questions end with a '?'
+            if text.endswith('?'):
+                if current_question:
+                    questions.append(current_question)
+                current_question = {'question': text, 'answers': []}
+            elif current_question:
+                is_correct = '✅' in text
+                text = text.replace('✅', '').replace('❌', '').strip()
+                current_question['answers'].append({'text': text, 'correct': is_correct})
+
+        if current_question:
+            questions.append(current_question)
+
+        return questions
+    except Exception as e:
+        flash(f"Error parsing Word document: {e}", "error")
+        return []
+
+@app.route('/exam/upload', methods=['GET', 'POST'])
+def upload_exam_route():
+    if request.method == 'POST':
+        if 'exam_file' not in request.files:
+            flash('No file part', 'error')
+            return redirect(request.url)
+        file = request.files['exam_file']
+        if file.filename == '':
+            flash('No selected file', 'error')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(filepath)
+            questions = parse_exam_docx(filepath)
+            return render_template('exam.html', questions=questions, theme=get_color_theme(), themes=ALLOWED_THEMES)
+        else:
+            flash('Allowed file types are docx', 'error')
+            return redirect(request.url)
+
+    return render_template('upload_exam.html', theme=get_color_theme(), themes=ALLOWED_THEMES)
 
 
 if __name__ == '__main__':
