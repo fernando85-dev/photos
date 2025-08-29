@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Mock Exam</h1>
+    <div id="score-container">
+        <h2>Score</h2>
+        <p>Correct: <span id="correct-count">0</span></p>
+        <p>Incorrect: <span id="incorrect-count">0</span></p>
+    </div>
+
+    <div id="exam-container">
+        {% for question in questions %}
+            <div class="question">
+                <p>{{ question.question }}</p>
+                <ul class="answers">
+                    {% for answer in question.answers %}
+                        <li data-correct="{{ 'true' if answer.correct else 'false' }}">{{ answer.text }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="result-container" style="display: none;">
+        <h2>Result</h2>
+        <p id="result-message"></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const questions = document.querySelectorAll('.question');
+            const correctCountSpan = document.getElementById('correct-count');
+            const incorrectCountSpan = document.getElementById('incorrect-count');
+            const resultContainer = document.getElementById('result-container');
+            const resultMessage = document.getElementById('result-message');
+
+            let correctCount = 0;
+            let incorrectCount = 0;
+            const totalQuestions = questions.length;
+
+            questions.forEach(question => {
+                const answers = question.querySelectorAll('.answers li');
+                answers.forEach(answer => {
+                    answer.addEventListener('click', function () {
+                        if (question.classList.contains('answered')) {
+                            return;
+                        }
+                        question.classList.add('answered');
+
+                        const isCorrect = this.dataset.correct === 'true';
+
+                        if (isCorrect) {
+                            this.classList.add('correct');
+                            correctCount++;
+                        } else {
+                            this.classList.add('incorrect');
+                            incorrectCount++;
+                            answers.forEach(ans => {
+                                if (ans.dataset.correct === 'true') {
+                                    ans.classList.add('correct-unselected');
+                                }
+                            });
+                        }
+
+                        correctCountSpan.textContent = correctCount;
+                        incorrectCountSpan.textContent = incorrectCount;
+
+                        if (correctCount + incorrectCount === totalQuestions) {
+                            const percentage = (correctCount / totalQuestions) * 100;
+                            if (percentage >= 68) {
+                                resultMessage.textContent = `Congratulations! You passed with ${percentage.toFixed(2)}%.`;
+                                resultMessage.style.color = 'green';
+                            } else {
+                                resultMessage.textContent = `Sorry, you failed with ${percentage.toFixed(2)}%. You need at least 68% to pass.`;
+                                resultMessage.style.color = 'red';
+                            }
+                            resultContainer.style.display = 'block';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}
